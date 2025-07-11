@@ -6,34 +6,42 @@ const Login = ({ handleLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const submitHandler = (e) => {
-    e.preventDefault();
+ 
+const submitHandler = async (e) => {
+  e.preventDefault();
 
-    if (!email || !password) {
-      toast.error('❌ Please fill in both fields.', {
-        position: 'top-right',
-        autoClose: 3000,
-        theme: 'colored',
-      });
-      return;
-    }
-
-    handleLogin(email, password);
-
-    toast.success('✅ Login submitted!', {
+  if (!email || !password) {
+    toast.error('❌ Please fill in both fields.', {
       position: 'top-right',
       autoClose: 3000,
       theme: 'colored',
     });
+    return;
+  }
 
+  const success = handleLogin(email, password);
+
+  if (success) {
+    toast.success('✅ Login successful!', {
+      position: 'top-right',
+      autoClose: 3000,
+      theme: 'colored',
+    });
     setEmail('');
     setPassword('');
-  };
+  } else {
+    toast.error('❌ Login failed. Invalid email or password.', {
+      position: 'top-right',
+      autoClose: 3000,
+      theme: 'colored',
+    });
+  }
+};
+
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-emerald-100 via-teal-200 to-green-100 p-4">
       <div className="w-full max-w-md bg-white/80 backdrop-blur-lg border border-white/40 rounded-2xl shadow-2xl px-8 py-10">
-
         {/* Header */}
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-emerald-700">Employee Management System</h1>
